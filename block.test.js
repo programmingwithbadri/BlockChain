@@ -32,4 +32,27 @@ describe('Genesis Block', () => {
   it('returns the Genesis data', () => {
     expect(genesisBlock).toEqual(GENESIS_DATA);
   });
+});
+
+describe('Mine Block', () => {
+  const lastBlock = Block.genesis();
+  const data = 'mined data';
+
+  const minedBlock = Block.mineBlock({ lastBlock, data });
+
+  it('returns a Block instance', () => {
+    expect(minedBlock instanceof Block).toBe(true);
+  });
+
+  it('sets the `lastHash` to be the `hash` of the lastBlock', () => {
+    expect(minedBlock.lastHash).toEqual(lastBlock.hash);
+  });
+
+  it('sets the `data`', () => {
+    expect(minedBlock.data).toEqual(data);
+  });
+
+  it('sets the `timestamp`', () => {
+    expect(minedBlock.timestamp).not.toEqual(undefined);
+  });
 })
