@@ -25,7 +25,7 @@ class BlockChain {
             console.error('THe incoming chain should be valid')
             return;
         }
-
+        
         this.chain = chain;
     }
 
