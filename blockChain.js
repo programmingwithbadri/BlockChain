@@ -16,7 +16,17 @@ class BlockChain {
     }
 
     replaceChain(chain) {
-        
+        if (chain.length <= this.chain.length) {
+            console.error('THe incoming chain should be longer')
+            return;
+        }
+
+        if (!BlockChain.isValidChain(chain)) {
+            console.error('THe incoming chain should be valid')
+            return;
+        }
+
+        this.chain = chain;
     }
 
     static isValidChain(chain) {
