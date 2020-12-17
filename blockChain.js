@@ -25,7 +25,7 @@ class BlockChain {
             console.error('THe incoming chain should be valid')
             return;
         }
-        
+
         this.chain = chain;
     }
 
@@ -33,12 +33,12 @@ class BlockChain {
         if (JSON.stringify(chain[0]) !== JSON.stringify(Block.genesis())) return false;
 
         for (let i = 1; i < chain.length; i++) {
-            const { timestamp, hash, data, lastHash } = chain[i];
+            const { timestamp, hash, data, lastHash, difficulty, nonce } = chain[i];
             const actualLastHash = chain[i - 1].hash;
 
             if (lastHash !== actualLastHash) return false;
 
-            const validatedHash = cryptoHash(timestamp, lastHash, data);
+            const validatedHash = cryptoHash(timestamp, lastHash, data, nonce, difficulty);
 
             if (hash !== validatedHash) return false;
         }
