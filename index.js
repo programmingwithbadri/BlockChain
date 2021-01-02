@@ -1,11 +1,16 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const Blockchain = require('./blockchain');
+const PubSub = require('./pubsub');
 
 const DEFAULT_PORT = 3000;
 
 const app = express();
 const blockchain = new Blockchain();
+const pubsub = new PubSub({ blockchain });
+
+// Broadcasting after some time
+setTimeout(() => pubsub.broadcastChain(), 1000);
 
 app.use(bodyParser.json());
 
