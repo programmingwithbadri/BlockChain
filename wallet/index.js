@@ -1,5 +1,5 @@
 const { STARTING_BALANCE } = require('../config');
-const { ec } = require('../util');
+const { ec, cryptoHash } = require('../util');
 
 class Wallet {
     constructor() {
@@ -8,6 +8,10 @@ class Wallet {
         this.keyPair = ec.genKeyPair();
 
         this.publicKey = this.keyPair.getPublic().encode('hex');
+    }
+
+    sign(data) {
+        return this.keyPair.sign(cryptoHash(data))
     }
 };
 
