@@ -94,6 +94,10 @@ app.post('/api/transact', (req, res) => {
     res.json({ type: 'success', transaction });
 });
 
+app.get('/api/transaction-pool-map', (req, res) => {
+    res.json(transactionPool.transactionMap);
+});
+
 const PORT = PEER_PORT || DEFAULT_PORT;
 app.listen(PORT, () => {
     console.log(`listening at localhost: ${PORT}`);
