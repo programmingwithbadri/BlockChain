@@ -68,14 +68,26 @@ app.post('/api/mine', (req, res) => {
 
     res.redirect('/api/blocks');
 });
+
 app.post('/api/transact', (req, res) => {
     const { amount, recipient } = req.body;
 
-    const transaction = wallet.createTransaction({
-        recipient,
-        amount,
-        chain: blockchain.chain
-    });
+    let transaction = transactionPool
+        .existingTransaction({ inputAddress: wallet.publicKey });
+
+    try {
+        if (transaction) {
+            transaction.update({ senderWallet: wallet, recipient, amount });
+        } else {
+            transaction = wallet.createTransaction({
+                recipient,
+                amount,
+                chain: blockchain.chain
+            });
+        }
+    } catch (error) {
+        return res.status(400).json({ type: 'error', message: error.message });
+    }
 
     transactionPool.setTransaction(transaction);
 
