@@ -64,3 +64,6 @@ typings/
 
 # Serverless directories
 .serverless
+
+.cache
+client/dist

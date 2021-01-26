@@ -1,5 +1,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
+const cors = require('cors');
+const path = require('path');
 const request = require('request');
 const Blockchain = require('./blockchain');
 const PubSub = require('./app/pubsub');
@@ -51,8 +53,9 @@ const transactionMiner = new TransactionMiner({
 
 // Broadcasting after some time
 setTimeout(() => pubsub.broadcastChain(), 1000);
-
+app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'client/dist')));
 
 app.get('/api/blocks', (req, res) => {
     res.json(blockchain.chain);
@@ -132,6 +135,50 @@ app.get('/api/wallet-info', (req, res) => {
         balance: Wallet.calculateBalance({ chain: blockchain.chain, address })
     });
 });
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/dist/index.html'));
+});
+
+// Adds the mock data to the blockChain for dev
+const walletFoo = new Wallet();
+const walletBar = new Wallet();
+
+const generateWalletTransaction = ({ wallet, recipient, amount }) => {
+    const transaction = wallet.createTransaction({
+        recipient, amount, chain: blockchain.chain
+    });
+
+    transactionPool.setTransaction(transaction);
+};
+
+const walletAction = () => generateWalletTransaction({
+    wallet, recipient: walletFoo.publicKey, amount: 5
+});
+
+const walletFooAction = () => generateWalletTransaction({
+    wallet: walletFoo, recipient: walletBar.publicKey, amount: 10
+});
+
+const walletBarAction = () => generateWalletTransaction({
+    wallet: walletBar, recipient: wallet.publicKey, amount: 15
+});
+
+for (let i = 0; i < 20; i++) {
+    if (i % 3 === 0) {
+        walletAction();
+        walletFooAction();
+    } else if (i % 3 === 1) {
+        walletAction();
+        walletBarAction();
+    } else {
+        walletFooAction();
+        walletBarAction();
+    }
+
+    transactionMiner.mineTransactions();
+}
+
 
 const PORT = PEER_PORT || DEFAULT_PORT;
 app.listen(PORT, () => {
