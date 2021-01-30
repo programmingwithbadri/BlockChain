@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import Block from './Block';
 
 const Blocks = () => {
@@ -13,6 +14,7 @@ const Blocks = () => {
     }, []);
     return (
         <div>
+            <div><Link to='/'>Home</Link></div>
             <h3>Blocks</h3>
             {
                 blocks.map(block => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Blocks from './Blocks';
 import logo from '../assets/logo.png';
 
 const App = () => {
@@ -21,14 +21,14 @@ const App = () => {
             <br />
             <div>
                 Welcome to the blockchain...
-                </div>
+            </div>
             <br />
+            <div><Link to='/blocks'>Blocks</Link></div>
             <br />
             <div className='WalletInfo'>
                 <div>Address: {address}</div>
                 <div>Balance: {balance}</div>
             </div>
-            <Blocks />
         </div>
     );
 }
