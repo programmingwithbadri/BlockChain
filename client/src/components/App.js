@@ -15,6 +15,7 @@ const App = () => {
     }, []);
 
     const { address, balance } = walletInfo;
+
     return (
         <div className='App'>
             <img className='logo' src={logo}></img>
@@ -24,6 +25,7 @@ const App = () => {
             </div>
             <br />
             <div><Link to='/blocks'>Blocks</Link></div>
+            <div><Link to='/conduct-transaction'>Conduct a Transaction</Link></div>
             <br />
             <div className='WalletInfo'>
                 <div>Address: {address}</div>

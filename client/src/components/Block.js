@@ -30,8 +30,8 @@ const Block = ({ block }) => {
                     }
                     <br />
                     <Button
-                        bsStyle="danger"
-                        bsSize="small"
+                        variant="danger"
+                        size="sm"
                         onClick={toggleTransaction}
                     >
                         Show Less
@@ -44,8 +44,8 @@ const Block = ({ block }) => {
             <div>
                 <div>Data: {dataDisplay}</div>
                 <Button
-                    bsStyle="danger"
-                    bsSize="small"
+                    variant="danger"
+                    size="sm"
                     onClick={toggleTransaction}>
                     Show More
                 </Button>
