@@ -12,7 +12,7 @@ const TransactionPool = () => {
 
     useEffect(() => {
         const fetchTransactionPoolMap = async () => {
-            const { data } = await axios.get('http://localhost:3000/api/transaction-pool-map');
+            const { data } = await axios.get(`${document.location.origin}/api/transaction-pool-map`);
             setTransactionPoolMap(data);
         }
         const fetchPoolMapInterval = setInterval(
@@ -26,7 +26,7 @@ const TransactionPool = () => {
     }, []);
 
     const fetchMineTransactions = async () => {
-        const { data } = await axios.get('http://localhost:3000/api/mine-transactions')
+        const { data } = await axios.get(`${document.location.origin}/api/mine-transactions`)
         if (data.length > 0) {
             alert('success');
             history.push('/blocks');

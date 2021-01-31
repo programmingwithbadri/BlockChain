@@ -17,7 +17,9 @@ const REDIS_URL = isDevelopment ?
 
 const DEFAULT_PORT = 3000;
 
-const ROOT_NODE_ADDRESS = `http://localhost:${DEFAULT_PORT}`;
+const ROOT_NODE_ADDRESS = isDevelopment
+    ? `http://localhost:${DEFAULT_PORT}`
+    : 'https://block-chain-tdd.herokuapp.com';
 
 const syncWithRootState = () => {
     request({ url: `${ROOT_NODE_ADDRESS}/api/blocks` }, (error, response, body) => {
@@ -203,7 +205,7 @@ if (process.env.GENERATE_PEER_PORT === 'true') {
 
 const PORT = process.env.PORT || PEER_PORT || DEFAULT_PORT;
 app.listen(PORT, () => {
-    console.log(`listening at localhost: ${PORT}`);
+    console.log(`listening at ${ROOT_NODE_ADDRESS}`);
     if (PORT !== DEFAULT_PORT) {
         syncWithRootState();
     }

@@ -8,7 +8,7 @@ const App = () => {
 
     useEffect(() => {
         const fetchedWalletInfo = async () => {
-            const { data } = await axios.get('http://localhost:3000/api/wallet-info');
+            const { data } = await axios.get(`${document.location.origin}/api/wallet-info`);
             setWalletInfo(data);
         }
         fetchedWalletInfo();

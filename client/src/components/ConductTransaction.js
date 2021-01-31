@@ -11,7 +11,7 @@ const ConductTransaction = () => {
 
     useEffect(() => {
         const fetchedKnownAddress = async () => {
-            const { data } = await axios.get('http://localhost:3000/api/known-addresses');
+            const { data } = await axios.get(`${document.location.origin}/api/known-addresses`);
             setKnownAddresses(data);
         }
         fetchedKnownAddress();
@@ -32,7 +32,7 @@ const ConductTransaction = () => {
 
         const payload = { recipient, amount }
 
-        const { data } = await axios.post('http://localhost:3000/api/transact', payload, config)
+        const { data } = await axios.post(`${document.location.origin}/api/transact`, payload, config)
 
         alert(data.message || data.type);
         history.push('/transaction-pool');
